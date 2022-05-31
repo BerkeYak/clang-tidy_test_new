@@ -14,13 +14,13 @@ command -v parallel >/dev/null 2>&1 || {
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 # Create an empty array that will contain all the filepaths of files modified.
-declare -a MODIFIED_FILEPATHS
+MODIFIED_FILEPATHS=()
 
 # Find the merge BASE compared to master
 BASE=$(git merge-base refs/remotes/origin/master HEAD)
 
 # Iterate through modified files in this PR
-while read line
+while IFS='' read -r line
 do
   # Get the absolute path of each file.
   ABSOLUTE_FILEPATH=$(realpath "$line")
