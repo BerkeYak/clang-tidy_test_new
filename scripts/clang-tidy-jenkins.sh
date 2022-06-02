@@ -14,13 +14,13 @@ command -v parallel >/dev/null 2>&1 || {
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 # Create an empty array that will contain all the filepaths of files modified.
-declare -a MODIFIED_FILEPATHS
+MODIFIED_FILEPATHS=()
 
 # Find the merge BASE compared to master
-BASE=$(git merge-base refs/remotes/origin/master HEAD)
+# BASE=$(git merge-base refs/remotes/origin/master HEAD)
 
 # Iterate through modified files in this PR
-while read line
+while IFS='' read -r line
 do
   # Get the absolute path of each file.
   ABSOLUTE_FILEPATH=$(realpath "$line")
@@ -30,7 +30,7 @@ do
 
 # `git diff-tree` outputs all the files that differ between the different commits.
 # By specifying `--diff-filter=d`, it doesn't report deleted files.
-done < <(git diff-tree --no-commit-id --diff-filter=d --name-only -r "$BASE" HEAD)
+done < <(git diff-tree --no-commit-id --diff-filter=d --name-only -r HEAD)
 
 # Path to compilation database (compile_commands.json)
 ARCH="x86_64"
@@ -39,7 +39,7 @@ BUILD_DIR=$THIS_DIR/../_build/$ARCH
 # Set clang-tidy checks and header-filters
 CHECKS="-checks=-*,bugprone-*,-bugprone-narrowing-conversions,-bugprone-branch-clone"
 HEADER_FILTER="-header-filter=*,-*/externals/*"
-CLANG="clang-tidy-7 $CHECKS $HEADER_FILTER -p $BUILD_DIR"
+CLANG="clang-tidy $CHECKS $HEADER_FILTER -p $BUILD_DIR"
 
 # Output file
 CLANG_OUTPUT_FILE="$BUILD_DIR/clang-tidy-output"
