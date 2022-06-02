@@ -40,8 +40,9 @@ BUILD_DIR=$THIS_DIR/../_build/$ARCH
 echo "BUİLD_DIR ::"
 echo $BUILD_DIR
 
-
-cat $build_dir/compile_commands.json
+readonly tidy_dir=.tidytmp
+mkdir -p $tidy_dir
+cat $build_dir/compile_commands.json \
   > $tidy_dir/compile_commands.json
 
 # Set clang-tidy checks and header-filters
