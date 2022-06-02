@@ -37,9 +37,9 @@ ARCH="x86_64"
 BUILD_DIR=$THIS_DIR/../_build/$ARCH
 
 # Set clang-tidy checks and header-filters
-CHECKS="-checks=-*,bugprone-*,-bugprone-narrowing-conversions,-bugprone-branch-clone"
-HEADER_FILTER="-header-filter=*,-*/externals/*"
-CLANG="clang-tidy $CHECKS $HEADER_FILTER -p $BUILD_DIR"
+#CHECKS="-checks=-*,bugprone-*,-bugprone-narrowing-conversions,-bugprone-branch-clone"
+#HEADER_FILTER="-header-filter=*,-*/externals/*"
+CLANG="clang-tidy" # $CHECKS $HEADER_FILTER -p $BUILD_DIR"
 
 # Output file
 CLANG_OUTPUT_FILE="$BUILD_DIR/clang-tidy-output"
