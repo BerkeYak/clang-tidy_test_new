@@ -40,10 +40,17 @@ BUILD_DIR=$THIS_DIR/../_build/$ARCH
 echo "BUİLD_DIR ::"
 echo $BUILD_DIR
 
+
+readonly tidy_dir=.tidytmp
+mkdir -p $tidy_dir
+cat $BUILD_DIR/compile_commands.json \
+  | jq '[ .[] | select(.file | endswith(".pb.cc") | not) ]' \
+  > $tidy_dir/compile_commands.json
+
 # Set clang-tidy checks and header-filters
 #CHECKS="-checks=-*,bugprone-*,-bugprone-narrowing-conversions,-bugprone-branch-clone"
 #HEADER_FILTER="-header-filter=*,-*/externals/*"
-CLANG="clang-tidy -p $BUILD_DIR" # $CHECKS $HEADER_FILTER -p $BUILD_DIR"
+CLANG="clang-tidy -p $tidy_dir" # $CHECKS $HEADER_FILTER -p $BUILD_DIR"
 
 # Output file
 CLANG_OUTPUT_FILE="$BUILD_DIR/clang-tidy-output"
