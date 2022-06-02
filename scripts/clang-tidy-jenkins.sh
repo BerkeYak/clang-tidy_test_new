@@ -17,7 +17,7 @@ THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 MODIFIED_FILEPATHS=()
 
 # Find the merge BASE compared to master
-BASE=$(git merge-base refs/remotes/origin/master HEAD)
+# BASE=$(git merge-base refs/remotes/origin/master HEAD)
 
 # Iterate through modified files in this PR
 while IFS='' read -r line
@@ -30,7 +30,7 @@ do
 
 # `git diff-tree` outputs all the files that differ between the different commits.
 # By specifying `--diff-filter=d`, it doesn't report deleted files.
-done < <(git diff-tree --no-commit-id --diff-filter=d --name-only -r "$BASE" HEAD)
+done < <(git diff-tree --no-commit-id --diff-filter=d --name-only -r HEAD)
 
 # Path to compilation database (compile_commands.json)
 ARCH="x86_64"
