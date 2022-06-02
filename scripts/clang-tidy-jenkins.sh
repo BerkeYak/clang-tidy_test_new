@@ -43,9 +43,7 @@ echo $BUILD_DIR
 
 readonly tidy_dir=.tidytmp
 mkdir -p $tidy_dir
-cat $BUILD_DIR/compile_commands.json \
-  | jq '[ .[] | select(.file | endswith(".pb.cc") | not) ]' \
-  > $tidy_dir/compile_commands.json
+cp $BUILD_DIR/compile_commands.json $tidy_dir
 
 # Set clang-tidy checks and header-filters
 #CHECKS="-checks=-*,bugprone-*,-bugprone-narrowing-conversions,-bugprone-branch-clone"
