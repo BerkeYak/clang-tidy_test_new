@@ -5,6 +5,6 @@
 #define multiply_bugprone(a,b) (a*b)
 
 int main(int argc, char *argv[]){
-   std::cout << "Hello World!" << std::endl; //test_change
+   std::cout << "Hello World!" << std::endl; //test_chang
    return 0;
 }
