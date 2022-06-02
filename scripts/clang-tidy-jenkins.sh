@@ -68,16 +68,17 @@ if [ ${#MODIFIED_FILEPATHS[@]} -eq 0 ]; then
 else
     echo "Parallelizing clang-tidy"
     parallel -j$N $CLANG {} ::: "${MODIFIED_FILEPATHS[@]}" | tee $CLANG_OUTPUT_FILE
+    echo "Parallel worked"
 fi
 
 # Translate raw compiler warning output to JUunit XML file
 cat "$CLANG_OUTPUT_FILE" | python3 scripts/clang-tidy-to-junit.py . > $JUNIT_OUTPUT_FILE
 
 # DEBUG
-# echo "Modified files: "
-# echo "${MODIFIED_FILEPATHS[@]}"
-# echo "Clang-tidy output:"
-# echo $CLANG_OUTPUT_FILE
+ echo "Modified files: "
+ echo "${MODIFIED_FILEPATHS[@]}"
+ echo "Clang-tidy output:"
+ echo $CLANG_OUTPUT_FILE
 # echo "JUnit output:"
 # echo $JUNIT_OUTPUT_FILE
 
