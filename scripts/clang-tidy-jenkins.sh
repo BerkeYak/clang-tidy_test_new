@@ -42,7 +42,7 @@ echo $BUILD_DIR
 
 readonly tidy_dir=.tidytmp
 mkdir -p $tidy_dir
-cat $build_dir/compile_commands.json \
+cat $BUILD_DIR/compile_commands.json \
   > $tidy_dir/compile_commands.json
 
 # Set clang-tidy checks and header-filters
