@@ -12,6 +12,8 @@ command -v parallel >/dev/null 2>&1 || {
 }
 
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+echo "THIS_DIR ::"
+echo $THIS_DIR
 
 # Create an empty array that will contain all the filepaths of files modified.
 MODIFIED_FILEPATHS=()
@@ -35,6 +37,8 @@ done < <(git diff-tree --no-commit-id --diff-filter=d --name-only -r HEAD)
 # Path to compilation database (compile_commands.json)
 ARCH="x86_64"
 BUILD_DIR=$THIS_DIR/../_build/$ARCH
+echo "BUİLD_DIR ::"
+echo $BUILD_DIR
 
 # Set clang-tidy checks and header-filters
 #CHECKS="-checks=-*,bugprone-*,-bugprone-narrowing-conversions,-bugprone-branch-clone"
