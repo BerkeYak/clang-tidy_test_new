@@ -79,6 +79,6 @@ cat "$CLANG_OUTPUT_FILE" | python3 scripts/clang-tidy-to-junit.py . > $JUNIT_OUT
  echo "${MODIFIED_FILEPATHS[@]}"
  echo "Clang-tidy output:"
  echo $CLANG_OUTPUT_FILE
-# echo "JUnit output:"
-# echo $JUNIT_OUTPUT_FILE
+ echo "JUnit output:"
+ echo $JUNIT_OUTPUT_FILE
 
