@@ -1,4 +1,22 @@
+def notifySlack(String buildStatus = 'STARTED', String channelName = '#jenkins') {
+    
+    // Build status of null means success.
+    buildStatus = buildStatus ?: 'SUCCESS'
+    def color
+    if (buildStatus == 'STARTED') {
+        color = '#D4DADF'
+    } else if (buildStatus == 'SUCCESS') {
+        color = '#BDFFC3'
+    } else if (buildStatus == 'UNSTABLE') {
+        color = '#FFFE89'
+    } else {
+        color = '#FF9FA1'
+    }
+    def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
+    slackSend(channel: channelName, color: color, message: msg)
+}
 node {
+
     // Clone the repo
     checkout scm
 
@@ -13,7 +31,11 @@ node {
     }
     catch(e)
     {
+	currentBuild.result = 'FAILURE'
         echo e.toString()
+    } 
+    finally {
+        notifySlack(currentBuild.result)
     }
 
     // Stage 2
@@ -27,7 +49,11 @@ node {
     }
     catch(e)
     {
+	currentBuild.result = 'FAILURE'
         echo e.toString()
+    } 
+    finally {
+        notifySlack(currentBuild.result)
     }
 
     // Stage 3
@@ -39,18 +65,10 @@ node {
     }
     catch(e)
     {
+	currentBuild.result = 'FAILURE'
         echo e.toString()
-    }
-
-    // Stage 4
-    try
-    {
-        stage('Post-Build') {
-            slackSend(channel: "#jenkins", message: "Post-Build::Testing")
-        }
-    }
-    catch(e)
-    {
-        echo e.toString()
+    } 
+    finally {
+        notifySlack(currentBuild.result)
     }
 }
