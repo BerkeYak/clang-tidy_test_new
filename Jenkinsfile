@@ -41,4 +41,16 @@ node {
     {
         echo e.toString()
     }
+
+    // Stage 4
+    try
+    {
+        stage('Post-Build') {
+            slackSend(channel: "#jenkins", message: "Post-Build::Testing")
+        }
+    }
+    catch(e)
+    {
+        echo e.toString()
+    }
 }
