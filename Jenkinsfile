@@ -33,9 +33,6 @@ node {
     {
 	currentBuild.result = 'FAILURE'
         echo e.toString()
-    } 
-    finally {
-        notifySlack(currentBuild.result)
     }
 
     // Stage 2
@@ -51,9 +48,6 @@ node {
     {
 	currentBuild.result = 'FAILURE'
         echo e.toString()
-    } 
-    finally {
-        notifySlack(currentBuild.result)
     }
 
     // Stage 3
