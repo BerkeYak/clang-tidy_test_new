@@ -12,8 +12,6 @@ command -v parallel >/dev/null 2>&1 || {
 }
 
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-echo "THIS_DIR ::"
-echo $THIS_DIR
 
 # Create an empty array that will contain all the filepaths of files modified.
 MODIFIED_FILEPATHS=()
@@ -37,8 +35,6 @@ done < <(git diff-tree --no-commit-id --diff-filter=d --name-only -r $BASE HEAD)
 # Path to compilation database (compile_commands.json)
 ARCH="x86_64"
 BUILD_DIR=$THIS_DIR/../_build/$ARCH
-echo "BUİLD_DIR ::"
-echo $BUILD_DIR
 
 readonly tidy_dir=.tidytmp
 mkdir -p $tidy_dir
@@ -75,10 +71,10 @@ fi
 cat "$CLANG_OUTPUT_FILE" | python3 scripts/clang-tidy-to-junit.py . > $JUNIT_OUTPUT_FILE
 
 # DEBUG
- echo "Modified files: "
- echo "${MODIFIED_FILEPATHS[@]}"
- echo "Clang-tidy output:"
- echo $CLANG_OUTPUT_FILE
- echo "JUnit output:"
- echo $JUNIT_OUTPUT_FILE
+# echo "Modified files: "
+# echo "${MODIFIED_FILEPATHS[@]}"
+# echo "Clang-tidy output:"
+# echo $CLANG_OUTPUT_FILE
+# echo "JUnit output:"
+# echo $JUNIT_OUTPUT_FILE
 
